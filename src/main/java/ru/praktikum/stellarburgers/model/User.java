@@ -1,4 +1,4 @@
-package ru.praktikum.stellarburgers;
+package ru.praktikum.stellarburgers.model;
 
 public class User {
     private String email;
