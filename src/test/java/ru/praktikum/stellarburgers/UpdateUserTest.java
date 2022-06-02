@@ -1,5 +1,6 @@
 package ru.praktikum.stellarburgers;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -57,6 +58,7 @@ public class UpdateUserTest {
     }
 
     @Test
+    @DisplayName("Изменение данных пользователя")
     public void updateUserDataTest() {
         userClient.updateUserDataAndReturnResponse(updateUserRequest, authorize)
                 .assertThat().body("success", equalTo(success))

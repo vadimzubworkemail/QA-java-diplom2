@@ -1,5 +1,6 @@
 package ru.praktikum.stellarburgers;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -64,6 +65,7 @@ public class CreateOrderTest {
     }
 
     @Test
+    @DisplayName("Проверка создания заказов")
     public void createOrderTest() {
         validatableResponse = orderClient.createOrderAndReturnResponse(createOrderRequest, authorize)
                 .assertThat()
