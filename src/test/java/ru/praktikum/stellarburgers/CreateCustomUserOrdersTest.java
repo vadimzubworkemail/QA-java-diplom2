@@ -1,6 +1,5 @@
 package ru.praktikum.stellarburgers;
 
-import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
@@ -14,24 +13,23 @@ import ru.praktikum.stellarburgers.model.CreateOrderRequest;
 import ru.praktikum.stellarburgers.model.GetCustomUsersOrders;
 import ru.praktikum.stellarburgers.model.RegisterUserRequest;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 
 @RunWith(Parameterized.class)
 public class CreateCustomUserOrdersTest {
+    private final boolean authorize;
+    private final int ordersCount;
+    private final int returnedOrdersCount;
+    private final boolean success;
+    private final int code;
     UserClient userClient;
     OrderClient orderClient;
     RegisterUserRequest registerUserRequest;
     ValidatableResponse validatableResponse;
     GetCustomUsersOrders getCustomUsersOrders;
 
-    private final Boolean authorize;
-    private final Integer ordersCount;
-    private final Integer returnedOrdersCount;
-    private final Boolean success;
-    private final Integer code;
-
-    public CreateCustomUserOrdersTest(Boolean authorize, Integer ordersCount, Integer returnedOrdersCount, Boolean success, Integer code) {
+    public CreateCustomUserOrdersTest(boolean authorize, int ordersCount, int returnedOrdersCount, boolean success, int code) {
         this.authorize = authorize;
         this.ordersCount = ordersCount;
         this.returnedOrdersCount = returnedOrdersCount;
@@ -46,7 +44,7 @@ public class CreateCustomUserOrdersTest {
                 {true, 1, 1, true, 200},
                 {true, 50, 50, true, 200},
                 {true, 49, 49, true, 200},
-                {true, 51, 50, true, 200},
+                {true, 53, 50, true, 200},
                 {false, 1, 1, false, 401},
         };
     }
@@ -60,10 +58,10 @@ public class CreateCustomUserOrdersTest {
         userClient.saveUserToken(validatableResponse);
 
         CreateOrderRequest createOrderRequest = new CreateOrderRequest(new String[]{"61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa6f", "61c0c5a71d1f82001bdaaa73"});
-        for (int i = 0; i < ordersCount; i++){
+        for (int i = 0; i < ordersCount; i++) {
             orderClient.createOrderAndReturnResponse(createOrderRequest, true);
         }
-        getCustomUsersOrders = new  GetCustomUsersOrders(registerUserRequest.email);
+        getCustomUsersOrders = new GetCustomUsersOrders(registerUserRequest.email);
     }
 
     @After
@@ -82,7 +80,7 @@ public class CreateCustomUserOrdersTest {
 
         if (authorize) {
             validatableResponse
-                    .body("orders.size()", is(returnedOrdersCount));
+                    .body("orders.size()", equalTo(returnedOrdersCount));
         }
     }
 }

@@ -11,19 +11,17 @@ import ru.praktikum.stellarburgers.client.UserClient;
 import ru.praktikum.stellarburgers.model.RegisterUserRequest;
 import ru.praktikum.stellarburgers.model.UpdateUserRequest;
 
-
 import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(Parameterized.class)
 public class UpdateUserTest {
+    private final Boolean authorize;
+    private final Boolean success;
+    private final Integer code;
     UserClient userClient;
     RegisterUserRequest registerUserRequest;
     ValidatableResponse validatableResponse;
-
-    private final Boolean authorize;
     UpdateUserRequest updateUserRequest;
-    private final Boolean success;
-    private final Integer code;
 
     public UpdateUserTest(Boolean authorize, UpdateUserRequest updateUserRequest, Boolean success, Integer code) {
         this.authorize = authorize;

@@ -16,16 +16,15 @@ import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
+    private final Boolean authorize;
+    private final Boolean success;
+    private final Boolean checkSuccessResponse;
+    private final Integer code;
     UserClient userClient;
     OrderClient orderClient;
     RegisterUserRequest registerUserRequest;
     ValidatableResponse validatableResponse;
-
-    private final Boolean authorize;
     CreateOrderRequest createOrderRequest;
-    private final Boolean success;
-    private final Boolean checkSuccessResponse;
-    private final Integer code;
 
     public CreateOrderTest(Boolean authorize, CreateOrderRequest createOrderRequest, Boolean success, Boolean checkSuccessResponse, Integer code) {
         this.authorize = authorize;
